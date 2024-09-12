@@ -1,18 +1,17 @@
 import ffmpeg from 'fluent-ffmpeg'
 import checkWritePermission from './checkWritePermission.js'
 
-function updateMetaData(originalPath, newPath, metadata = {}){
+function updateMetaData(originalPath, newPath, metadata = {}) {
     // checkWritePermission(originalPath)
     console.log(`-- Updating metadata...`)
     // Update metadata using FFmpeg
     ffmpeg(originalPath)
-        .outputOptions([
-            // '-metadata', 'title=New Title',    // Title metadata
-            // '-metadata', 'artist=New Artist',  // Artist metadata
-            // '-metadata', 'album=New Album',    // Album metadata
-            '-metadata', 'year=2024',          // Year metadata
-            '-metadata', `genre=${metadata.title}`       // Genre metadata
-            ])
+        .outputOption('-metadata', `title=${metadata.title}`)
+        .outputOption('-metadata', `artist=${metadata.artists}`)
+        .outputOption('-metadata', `album=${metadata.album}`)
+        .outputOption('-metadata', `year=${metadata.releaseDate}`)
+        .outputOption('-metadata', `genre=${metadata.genres}`)
+        .outputOption('-c', 'copy') // Copy the audio and video streams without re-encoding
         .output(newPath) // Ensure you're specifying the output file
         .on('end', () => { console.log('-- Metadata updated successfully') })
         .on('error', (err) => { console.error('-- Error updating metadata:', err) })

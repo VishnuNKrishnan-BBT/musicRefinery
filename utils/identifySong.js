@@ -19,11 +19,11 @@ function identifySong(filePath) {
     const ACCESS_SECRET = 'yaAmVUNahg8p6OPtCHCKAClQAkgFe0kB0Jdr71FT'
     const ENDPOINT = 'https://identify-ap-southeast-1.acrcloud.com/v1/identify'
 
-    console.log(`-- Audio received: ${filePath}`)
+    console.log(`-- Audio file received: ${filePath}`)
     return new Promise((resolve, reject) => {
         const httpMethod = 'POST'
         const httpUri = '/v1/identify'
-        const dataType = 'audio'          
+        const dataType = 'audio'
         const signatureVersion = '1'
         const timestamp = Math.floor(Date.now() / 1000)
 
@@ -65,15 +65,15 @@ function identifySong(filePath) {
                     axios.post(ENDPOINT, form, {
                         headers: form.getHeaders(),
                     })
-                    .then(response => {
-                        if(!response.data.metadata){
-                            reject({success: false, status: 'No match found.'})
-                        }else{
-                            const formattedAudioInfo = new ServiceResponseAdaptor(response.data).getFormatted()
-                            resolve(formattedAudioInfo)
-                        }
-                    })
-                    .catch(error => reject(error))
+                        .then(response => {
+                            if (!response.data.metadata) {
+                                reject({ success: false, status: 'No match found.' })
+                            } else {
+                                const formattedAudioInfo = new ServiceResponseAdaptor(response.data).getFormatted()
+                                resolve(formattedAudioInfo)
+                            }
+                        })
+                        .catch(error => reject(error))
                 })
             })
             .catch(error => reject(error))
