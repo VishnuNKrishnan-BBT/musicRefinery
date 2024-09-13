@@ -6,6 +6,8 @@ function updateMetaData(originalPath, newPath, metadata = {}) {
     console.log(`-- Updating metadata...`)
     // Update metadata using FFmpeg
     ffmpeg(originalPath)
+        .outputOption('-map_metadata', '-1') //Remove all existing metadata
+        .outputOption('-id3v2_version', '3')
         .outputOption('-metadata', `title=${metadata.title}`)
         .outputOption('-metadata', `artist=${metadata.artists}`)
         .outputOption('-metadata', `album=${metadata.album}`)

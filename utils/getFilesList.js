@@ -15,10 +15,6 @@ function getFilesInFolder(folderPath) {
                 return fs.statSync(path.join(folderPath, file)).isFile()
             })
 
-            fileNames.map(obj => {
-                console.log(obj)
-            })
-
             resolve(fileNames) // Resolve with an array of file names
         })
     })

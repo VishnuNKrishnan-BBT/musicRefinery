@@ -1,7 +1,7 @@
 import ffmpeg from 'fluent-ffmpeg'
 
 // Function to trim the audio file to 10 seconds
-function trimAudio(filePath, outputFilePath, duration = 20) {
+function trimAudio(filePath, outputFilePath, duration = 120) {
     return new Promise((resolve, reject) => {
         ffmpeg(filePath)
             .setStartTime(0) // Start from the beginning
